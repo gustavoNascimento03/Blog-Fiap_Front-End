@@ -15,10 +15,6 @@ function Home() {
         Ver Postagens →
       </Button>
 
-      {/* <button className='Botao-Home'>Ver Postagens →</button>
-      <Link className='Botao-Home' to="/posts" onClick={closeMenu}>Ver Postagens</Link> */}
-
-      {/* <img className='Img-Home' src='./public/menino-246px.png' alt='Menino Correndo'></img> */}
       <img className='Img-Home' src='./public/menino-492px.png' alt='Menino Correndo'></img>
     </div>
   );

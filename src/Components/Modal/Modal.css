@@ -36,5 +36,5 @@
 }
 
 .close-button:hover {
-  color: #333;
+  color: var(--cor-a-escuro);
 }

@@ -26,10 +26,10 @@ function Header() {
             {/* RES. Tablet/Desktop */}
             <nav>
                 <ul className='Ancoras'>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/posts">Ver Posts</Link></li>
-                    <li><Link to="/create-post">Novo Post</Link></li>
+                    <li><Link to="/">Início</Link></li>
                     <li><Link to="/login">Login</Link></li>
+                    <li><Link to="/create-post">Novo Post</Link></li>
+                    <li><Link to="/posts">Ver Postagens</Link></li>
                 </ul>
             </nav>
 
@@ -43,9 +43,9 @@ function Header() {
                 
                 <ul className={`Nav-menu ${menuAberto ? 'active' : ''}`}>
                     <li><Link to="/" onClick={closeMenu}>Início</Link></li>
-                    <li><Link to="/posts" onClick={closeMenu}>Ver Postagens</Link></li>
-                    <li><Link to="/create-post" onClick={closeMenu}>Novo Post</Link></li>
                     <li><Link to="/login" onClick={closeMenu}>Login</Link></li>
+                    <li><Link to="/create-post" onClick={closeMenu}>Novo Post</Link></li>
+                    <li><Link to="/posts" onClick={closeMenu}>Ver Postagens</Link></li>
                 </ul>
             </nav>
         </header>

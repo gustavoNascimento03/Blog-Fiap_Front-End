@@ -26,7 +26,7 @@ function PostList() {
 
   return (
     <div className="post-list-container">
-      <h1>Nossos Posts</h1>
+      <h1 className='Titulo-PostList'>Confira todos os Posts!</h1>
       <div className="post-grid">
         {postsData.map(post => (
           <PostCard

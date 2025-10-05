@@ -1,0 +1,28 @@
+.post-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Titulo-PostList {
+    color: var(--cor-a-escuro);
+    font-size: var(--fonte-titulo-p);
+}
+
+.post-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .Titulo-PostList {
+        font-size: var(--fonte-titulo-g);
+    }
+
+    .post-grid {
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
