@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
-import Login from './Pages/Login';
-import PostList from './Pages/PostList';
-import CreatePost from './Pages/CreatePost';
-import EditPost from './Pages/EditPostList';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import PostList from './pages/PostList';
+import CreatePost from './pages/CreatePost';
+import EditPost from './pages/EditPostList';
 
-import Header from './Components/Header/header'; // Uso geral!!! | vai em tds as pages.
+import Header from './Components/Header/Header'; // Uso geral!!! | vai em tds as pages.
 
 function App() {
   return (

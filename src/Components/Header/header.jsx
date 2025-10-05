@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
+import logoBlog from '../../assets/blog-logo.svg';
 
 function Header() {
     const [menuAberto, setMenuAberto] = useState(false);
@@ -8,35 +10,45 @@ function Header() {
         setMenuAberto(!menuAberto);
     };
 
+    const closeMenu = () => {
+        setMenuAberto(false);
+    }
+
     return (
-        <div className='Header-All'>
+        <header className='Header-All'>
             <div className='Frame-Logo'>
-                <img className='Imagem-Logo' src='./blog-logo.svg' alt='Logo do Blog' />
-                <h1 className='Titulo-Logo'>Blog Fiap</h1>
+                <Link to="/" onClick={closeMenu}>
+                    <img className='Imagem-Logo' src={logoBlog} alt='Logo do Blog' />
+                    <h1 className='Titulo-Logo'>Blog Fiap</h1>
+                </Link>
             </div>
+            
+            {/* RES. Tablet/Desktop */}
+            <nav>
+                <ul className='Ancoras'>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/posts">Ver Posts</Link></li>
+                    <li><Link to="/create-post">Novo Post</Link></li>
+                    <li><Link to="/login">Login</Link></li>
+                </ul>
+            </nav>
 
-            <div className='Ancoras'>
-                <a className='Ancoras-a' href="#">Inicio</a>
-                <a className='Ancoras-a' href="#">Criador</a>
-                <a className='Ancoras-a' href="#">Sou Professor</a>
-                <a className='Ancoras-a' href="#">Ver Postagens</a>
-            </div>
-
+            {/* Res. Mobile */}
             <nav className="Navbar">
                 <button className="hamburger" onClick={toggleMenu}>
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span className="bar"></span>
                 </button>
-
+                
                 <ul className={`Nav-menu ${menuAberto ? 'active' : ''}`}>
-                    <li><a href="#">Início</a></li>
-                    <li><a href="#">Criador</a></li>
-                    <li><a href="#">Sou Professor</a></li>
-                    <li><a href="#">Ver Postagens</a></li>
+                    <li><Link to="/" onClick={closeMenu}>Início</Link></li>
+                    <li><Link to="/posts" onClick={closeMenu}>Ver Postagens</Link></li>
+                    <li><Link to="/create-post" onClick={closeMenu}>Novo Post</Link></li>
+                    <li><Link to="/login" onClick={closeMenu}>Login</Link></li>
                 </ul>
             </nav>
-        </div>
+        </header>
     );
 };
 

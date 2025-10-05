@@ -17,6 +17,14 @@
   gap: 0.75rem;
 }
 
+.Frame-Logo a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .Imagem-Logo {
   height: 64px;
   width: auto;
@@ -28,13 +36,12 @@
   margin: 0;
 }
 
-/* REVISAR AQ DPS */
+/* Esconde a navegação principal em telas pequenas (Mobile First) */
 .Ancoras {
   display: none;
 }
 
-
-/* --- Estilos do Menu Hamburger (RES. baixa) --- */
+/* --- Estilos do Menu Hamburger --- */
 .hamburger {
   display: block;
   cursor: pointer;
@@ -52,17 +59,18 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* --- Estilos do Menu de Navegação Mobile (escondido por padrão) --- */
+/* --- Estilos do Menu de Navegação Mobile --- */
 .Nav-menu {
-  display: none; /* O menu começa escondido */
+  display: none;
   list-style: none;
   position: absolute;
-  top: 70px; /* Posição logo abaixo do header */
+  top: 97px;
   left: 0;
   width: 100%;
   background-color: var(--cor-a-claro);
   padding: 0;
   margin: 0;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .Nav-menu.active {
@@ -71,55 +79,77 @@
 
 .Nav-menu li {
   text-align: center;
+  border-bottom: 1px solid #eee;
 }
 
 .Nav-menu a {
   display: block;
   padding: 1rem;
-  color: var(--cor-texto-claro);
+  color: var(--cor-texto-escuro);
   text-decoration: none;
   transition: background-color 0.3s;
 }
 
 .Nav-menu a:hover {
-  background-color: var(--cor-a-escuro);
+  background-color: #f0f0f0;
 }
 
+.Nav-menu a.active {
+    background-color: var(--cor-a-escuro);
+    color: var(--cor-a-claro);
+}
 
-/* --- Tablet --- */
+/* --- Media Query para Tablet e Desktop --- */
 @media (min-width: 768px) {
-  .Navbar {
+  .Navbar, .hamburger {
     display: none;
   }
 
-  /* Mostra os links de navegação do desktop */
   .Ancoras {
     display: flex;
+    align-items: center;
     gap: 1.5rem;
   }
 
-  .Ancoras-a {
-    color: var(--cor-texto-claro);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    position: relative;
-    padding-bottom: 5px;
+  .Ancoras li {
+    list-style: none;
   }
 
-  /* Efeito de sublinhado animado no hover */
-  .Ancoras-a::after {
+  .Ancoras a {
+    color: var(--cor-texto-escuro);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s;
+  }
+
+  .Ancoras li:hover {
+      color: var(--cor-a-escuro);
+  }
+
+  .Ancoras a::after {
     content: '';
     position: absolute;
     width: 0;
     height: 2px;
     bottom: 0;
-    left: 0;
-    background-color: var(--cor-texto-escuro); /* Cor do sublinhado */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--cor-a-escuro);
     transition: width 0.3s ease-in-out;
   }
 
-  .Ancoras-a:hover::after {
+  .Ancoras a:hover::after {
+    width: 100%;
+  }
+
+  .Ancoras a.active {
+    font-weight: 700;
+  }
+
+  .Ancoras a.active::after {
     width: 100%;
   }
 }
