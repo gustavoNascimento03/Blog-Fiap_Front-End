@@ -11,14 +11,11 @@ export const AuthProvider = ({ children }) => {
   const login = (username, password) => {
     if (username === FAKE_USER && password === FAKE_PASSWORD) {
       setUser({ name: FAKE_USER });
-      return true;
+      return true; // Sucesso!
     }
-
-    // Se não for igual, o login falha.
-    return false;
+    return false; // Falhou!
   };
 
-  // A função de logout
   const logout = () => {
     setUser(null);
   };

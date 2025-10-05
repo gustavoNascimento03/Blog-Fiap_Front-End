@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PostCard from '../Components/PostCard/PostCard';
 import Modal from '../Components/Modal/Modal';
 import Button from '../Components/Button/Button';
@@ -6,28 +6,42 @@ import './PostList.css';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const postsData = [
-  { id: 1, title: 'Introdução ao React', professor: 'João da Silva', summary: 'Neste post, vamos explorar...', content: 'Este é o conteúdo completo do post sobre React. Blá blá blá...' },
-  { id: 2, title: 'CSS Moderno', professor: 'Maria Oliveira', summary: 'Aprenda sobre Flexbox, Grid...', content: 'O conteúdo completo sobre CSS moderno é bem extenso e detalhado. Blá blá blá...' },
-  { id: 3, title: 'JavaScript Avançado', professor: 'Carlos Pereira', summary: 'Vamos mergulhar em Promises...', content: 'Promises, Async/Await são a base do JS moderno. Blá blá blá...' }
-];
 
 function PostList() {
   const navigate = useNavigate();
-  const handleEditPost = (postId) => { navigate(`/edit-post/${postId}`); };
   const { isAuthenticated } = useAuth();
-  const [posts, setPosts] = useState(postsData);
+  
+  const [posts, setPosts] = useState([]); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`)
+      .then(response => response.json())
+      .then(data => setPosts(data))
+      .catch(error => console.error("Erro ao buscar posts:", error));
+  }, []);
+
   const handleDeletePost = (postId) => {
     if (window.confirm('Tem certeza que deseja apagar este post?')) {
-      const updatedPosts = posts.filter(post => post.id !== postId);
-      setPosts(updatedPosts);
-      handleCloseModal();
-
-      console.log(`Post com ID ${postId} apagado.`);
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`, {
+        method: 'DELETE',
+      })
+      .then(response => {
+        if (response.ok) {
+          setPosts(posts.filter(post => post.id !== postId));
+          handleCloseModal();
+          alert('Post apagado com sucesso!');
+        } else {
+          alert('Falha ao apagar o post.');
+        }
+      })
+      .catch(error => console.error("Erro ao apagar post:", error));
     }
+  };
+
+  const handleEditPost = (postId) => {
+    navigate(`/edit-post/${postId}`);
   };
 
   const handleCardClick = (post) => {
@@ -48,8 +62,8 @@ function PostList() {
           <PostCard
             key={post.id}
             title={post.title}
-            professor={post.professor}
-            summary={post.summary}
+            professor={post.professor || 'Autor Desconhecido'} 
+            summary={post.summary || post.body}
             onClick={() => handleCardClick(post)}
           />
         ))}
@@ -59,9 +73,9 @@ function PostList() {
         {selectedPost && (
           <div>
             <h2>{selectedPost.title}</h2>
-            <p><em>Por: {selectedPost.professor || 'API User'}</em></p>
+            <p><em>Por: {selectedPost.professor || 'Autor Desconhecido'}</em></p>
             <hr />
-            <p>{selectedPost.body || selectedPost.content}</p>
+            <p>{selectedPost.content || selectedPost.body}</p>
 
             {isAuthenticated && (
               <div className="admin-actions">

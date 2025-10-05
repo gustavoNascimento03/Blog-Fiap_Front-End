@@ -16,19 +16,38 @@ function CreatePost() {
       content: content,
     };
 
-    console.log("Enviando para a API (no futuro):", newPost);
-    alert('Post criado com sucesso! (Verifique o console do navegador)');
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newPost),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Falha ao criar o post');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Post criado com sucesso no backend:', data);
+        alert('Post criado com sucesso!');
 
-    setTitle('');
-    setProfessor('');
-    setContent('');
+        setTitle('');
+        setProfessor('');
+        setContent('');
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao criar o post.');
+      });
   };
 
   return (
     <div className="create-post-container">
       <h1>Criar Novo Post</h1>
       <p>Preencha os campos abaixo para publicar um novo post no blog.</p>
-      
+
       <form onSubmit={handleSubmit} className="post-form">
         <div className="form-group">
           <label htmlFor="title">Título do Post</label>

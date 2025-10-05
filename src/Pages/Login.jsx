@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from '../Components/Button/Button';
-import './CreatePost.css';
+// import './CreatePost.css';
+import './Login.css';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -52,7 +53,7 @@ function Login() {
         </div>
         <Button type="submit">Entrar</Button>
       </form>
-      <img className='Img-Home' src='./public/menina-492px.png' alt='Menino Correndo'></img>
+      <img className='Img-Login' src='./public/menina-492px.png' alt='Menina estudando'></img>
     </div>
 
   );
