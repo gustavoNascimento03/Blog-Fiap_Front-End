@@ -1,0 +1,125 @@
+.Header-All {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--cor-a-claro);
+  border-bottom: 1px solid #e0e0e0;
+  color: var(--cor-texto-escuro);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  font-family: var(--fonte-familia);
+}
+
+/* --- Estilos do Logo e Título --- */
+.Frame-Logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.Imagem-Logo {
+  height: 64px;
+  width: auto;
+}
+
+.Titulo-Logo {
+  font-size: 1.5rem; /*24px*/
+  font-weight: 700;
+  margin: 0;
+}
+
+/* REVISAR AQ DPS */
+.Ancoras {
+  display: none;
+}
+
+
+/* --- Estilos do Menu Hamburger (RES. baixa) --- */
+.hamburger {
+  display: block;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  background-color: var(--cor-a-escuro);
+  transition: all 0.3s ease-in-out;
+}
+
+/* --- Estilos do Menu de Navegação Mobile (escondido por padrão) --- */
+.Nav-menu {
+  display: none; /* O menu começa escondido */
+  list-style: none;
+  position: absolute;
+  top: 70px; /* Posição logo abaixo do header */
+  left: 0;
+  width: 100%;
+  background-color: var(--cor-a-claro);
+  padding: 0;
+  margin: 0;
+}
+
+.Nav-menu.active {
+  display: block;
+}
+
+.Nav-menu li {
+  text-align: center;
+}
+
+.Nav-menu a {
+  display: block;
+  padding: 1rem;
+  color: var(--cor-texto-claro);
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.Nav-menu a:hover {
+  background-color: var(--cor-a-escuro);
+}
+
+
+/* --- Tablet --- */
+@media (min-width: 768px) {
+  .Navbar {
+    display: none;
+  }
+
+  /* Mostra os links de navegação do desktop */
+  .Ancoras {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .Ancoras-a {
+    color: var(--cor-texto-claro);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  /* Efeito de sublinhado animado no hover */
+  .Ancoras-a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--cor-texto-escuro); /* Cor do sublinhado */
+    transition: width 0.3s ease-in-out;
+  }
+
+  .Ancoras-a:hover::after {
+    width: 100%;
+  }
+}
