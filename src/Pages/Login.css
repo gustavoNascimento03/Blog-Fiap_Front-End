@@ -1,0 +1,15 @@
+.Img-Home {
+    width: auto;
+    height: auto;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .Img-Home {
+        width: 350px;
+        height: 350px;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+}

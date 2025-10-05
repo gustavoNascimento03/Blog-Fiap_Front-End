@@ -52,7 +52,9 @@ function Login() {
         </div>
         <Button type="submit">Entrar</Button>
       </form>
+      <img className='Img-Home' src='./public/menina-492px.png' alt='Menino Correndo'></img>
     </div>
+
   );
 }
 
