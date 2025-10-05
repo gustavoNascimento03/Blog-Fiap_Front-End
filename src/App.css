@@ -1,0 +1,22 @@
+#root {
+  /* cores */
+  --cor-a-escuro: #2B2D42;
+  --cor-a-claro: #8D99AE;
+  --cor-bg: #EDF2F4;
+  --cor-texto-claro: #EDF2F4;
+  --cor-texto-escuro: #2B2D42;
+  --cor-erro: #981A29;
+  --cor-atencao: #D5CF09;
+  --cor-acerto: #40CF33;
+
+  /* borda */
+  --cor-borda-erro: #500E16;
+  --cor-borda-atencao: #726F09;
+  --cor-borda-acerto: #207019;
+  --cor-borda-a: #181925;
+
+  /* fontes */
+  --fonte-titulo-sp: 16px;
+  --fonte-titulo-p: 24px;
+  --fonte-titulo-g: 32px;
+}
