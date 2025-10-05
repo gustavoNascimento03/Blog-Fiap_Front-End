@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(34, 32, 32, 0.918);
   
   display: flex;
   justify-content: center;
@@ -14,7 +14,7 @@
 }
 
 .modal-content {
-  background-color: white;
+  background-color: var(--cor-bg);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
