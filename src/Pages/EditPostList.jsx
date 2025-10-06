@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../Components/Button/Button';
 import './CreatePost.css';
 
 function EditPost() {
   const { id } = useParams();
+  const { fetchPosts } = useAuth();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
@@ -16,32 +18,38 @@ function EditPost() {
       .then(response => response.json())
       .then(data => {
         setTitle(data.title);
-        setContent(data.body);
+        setContent(data.content);
         setIsLoading(false);
       });
   }, [id]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const updatedPost = {
-      id: id,
       title: title,
-      body: content,
-      userId: 1,
+      content: content,
     };
 
     fetch(`${import.meta.env.VITE_API_BASE_URL}/posts/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(updatedPost),
       headers: {
-        'Content-type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify(updatedPost),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Falha ao atualizar o post');
+        }
+        return response.json();
+      })
+      .then(async (data) => {
         console.log('Post atualizado com sucesso:', data);
         alert('Post atualizado com sucesso!');
+
+        await fetchPosts();
+
         navigate('/posts');
       });
   };

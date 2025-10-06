@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import Button from '../Components/Button/Button';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './CreatePost.css';
 
 function CreatePost() {
+  const { fetchPosts } = useAuth();
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState('');
-  const [author, setauthor] = useState('');
+  const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
 
   const handleSubmit = (event) => {
@@ -23,24 +28,28 @@ function CreatePost() {
       },
       body: JSON.stringify(newPost),
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Falha ao criar o post');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Post criado com sucesso no backend:', data);
-        alert('Post criado com sucesso!');
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Falha ao criar o post');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Post criado com sucesso no backend:', data);
+      alert('Post criado com sucesso!');
 
-        setTitle('');
-        setauthor('');
-        setContent('');
-      })
-      .catch(error => {
-        console.error('Erro:', error);
-        alert('Ocorreu um erro ao criar o post.');
+      fetchPosts().then(() => {
+        navigate('/posts');
       });
+
+      setTitle('');
+      setAuthor('');
+      setContent('');
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+      alert('Ocorreu um erro ao criar o post.');
+    });
   };
 
   return (
@@ -66,7 +75,7 @@ function CreatePost() {
             type="text"
             id="author"
             value={author}
-            onChange={(e) => setauthor(e.target.value)}
+            onChange={(e) => setAuthor(e.target.value)}
             required
           />
         </div>

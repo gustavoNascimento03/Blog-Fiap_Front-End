@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PostCard from '../Components/PostCard/PostCard';
 import Modal from '../Components/Modal/Modal';
 import Button from '../Components/Button/Button';
@@ -9,34 +9,50 @@ import { useNavigate } from 'react-router-dom';
 
 function PostList() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-  
-  const [posts, setPosts] = useState([]); 
+  const { isAuthenticated, posts, setPosts, isLoadingPosts } = useAuth();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`)
-      .then(response => response.json())
-      .then(data => setPosts(data))
-      .catch(error => console.error("Erro ao buscar posts:", error));
-  }, []);
+  const renderContent = () => {
+    if (isLoadingPosts) {
+      return <p>Carregando posts...</p>;
+    }
+
+    if (posts.length === 0) {
+      return <p>Nenhum post encontrado no momento. Volte mais tarde!</p>;
+    }
+
+    return (
+      <div className="post-grid">
+        {posts.map(post => (
+          <PostCard
+            key={post._id}
+            title={post.title}
+            author={post.author || 'Autor Desconhecido'}
+            summary={post.summary || post.body}
+            onClick={() => handleCardClick(post)}
+          />
+        ))}
+      </div>
+    );
+  };
 
   const handleDeletePost = (postId) => {
     if (window.confirm('Tem certeza que deseja apagar este post?')) {
       fetch(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`, {
         method: 'DELETE',
       })
-      .then(response => {
-        if (response.ok) {
-          setPosts(posts.filter(post => post.id !== postId));
-          handleCloseModal();
-          alert('Post apagado com sucesso!');
-        } else {
-          alert('Falha ao apagar o post.');
-        }
-      })
-      .catch(error => console.error("Erro ao apagar post:", error));
+        .then(response => {
+          if (response.ok) {
+            setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
+            handleCloseModal();
+            alert('Post apagado com sucesso!');
+          } else {
+            alert('Falha ao apagar o post.');
+          }
+        })
+        .catch(error => console.error("Erro ao apagar post:", error));
     }
   };
 
@@ -57,12 +73,13 @@ function PostList() {
   return (
     <div className="post-list-container">
       <h1 className='Titulo-PostList'>Confira todos os Posts!</h1>
+      {renderContent()}
       <div className="post-grid">
         {posts.map(post => (
           <PostCard
             key={post._id}
             title={post.title}
-            author={post.author || 'Autor Desconhecido'} 
+            author={post.author || 'Autor Desconhecido'}
             summary={post.summary || post.body}
             onClick={() => handleCardClick(post)}
           />
