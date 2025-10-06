@@ -60,7 +60,7 @@ function PostList() {
       <div className="post-grid">
         {posts.map(post => (
           <PostCard
-            key={post.id}
+            key={post._id}
             title={post.title}
             author={post.author || 'Autor Desconhecido'} 
             summary={post.summary || post.body}
@@ -79,10 +79,10 @@ function PostList() {
 
             {isAuthenticated && (
               <div className="admin-actions">
-                <Button onClick={() => handleEditPost(selectedPost.id)}>
+                <Button onClick={() => handleEditPost(selectedPost._id)}>
                   Alterar
                 </Button>
-                <Button onClick={() => handleDeletePost(selectedPost.id)}>
+                <Button onClick={() => handleDeletePost(selectedPost._id)}>
                   Apagar
                 </Button>
               </div>
