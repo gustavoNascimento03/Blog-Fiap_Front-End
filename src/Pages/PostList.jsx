@@ -6,7 +6,6 @@ import './PostList.css';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-
 function PostList() {
   const navigate = useNavigate();
   const { isAuthenticated, posts, setPosts, isLoadingPosts } = useAuth();
@@ -14,45 +13,21 @@ function PostList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const renderContent = () => {
-    if (isLoadingPosts) {
-      return <p>Carregando posts...</p>;
-    }
-
-    if (posts.length === 0) {
-      return <p>Nenhum post encontrado no momento. Volte mais tarde!</p>;
-    }
-
-    return (
-      <div className="post-grid">
-        {posts.map(post => (
-          <PostCard
-            key={post._id}
-            title={post.title}
-            author={post.author || 'Autor Desconhecido'}
-            summary={post.summary || post.body}
-            onClick={() => handleCardClick(post)}
-          />
-        ))}
-      </div>
-    );
-  };
-
   const handleDeletePost = (postId) => {
     if (window.confirm('Tem certeza que deseja apagar este post?')) {
       fetch(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`, {
         method: 'DELETE',
       })
-        .then(response => {
-          if (response.ok) {
-            setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
-            handleCloseModal();
-            alert('Post apagado com sucesso!');
-          } else {
-            alert('Falha ao apagar o post.');
-          }
-        })
-        .catch(error => console.error("Erro ao apagar post:", error));
+      .then(response => {
+        if (response.ok) {
+          setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
+          handleCloseModal();
+          alert('Post apagado com sucesso!');
+        } else {
+          alert('Falha ao apagar o post.');
+        }
+      })
+      .catch(error => console.error("Erro ao apagar post:", error));
     }
   };
 
@@ -70,21 +45,35 @@ function PostList() {
     setSelectedPost(null);
   }
 
-  return (
-    <div className="post-list-container">
-      <h1 className='Titulo-PostList'>Confira todos os Posts!</h1>
-      {renderContent()}
+  const renderContent = () => {
+    if (isLoadingPosts) {
+      return <p>Carregando posts...</p>;
+    }
+
+    if (!posts || posts.length === 0) {
+      return <p>Nenhum post encontrado no momento.</p>;
+    }
+
+    return (
       <div className="post-grid">
         {posts.map(post => (
           <PostCard
             key={post._id}
             title={post.title}
             author={post.author || 'Autor Desconhecido'}
-            summary={post.summary || post.body}
+            summary={post.content || post.body}
             onClick={() => handleCardClick(post)}
           />
         ))}
       </div>
+    );
+  };
+
+  return (
+    <div className="post-list-container">
+      <h1 className='Titulo-PostList'>Confira todos os Posts!</h1>
+      
+      {renderContent()}
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {selectedPost && (

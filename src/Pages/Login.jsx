@@ -20,7 +20,7 @@ function Login() {
     const success = login(username, password);
 
     if (success) {
-      navigate('/create-post');
+      navigate('/posts');
     } else {
       setError('Usuário ou senha inválidos. Tente "admin".');
     }
