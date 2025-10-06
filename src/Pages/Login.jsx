@@ -22,7 +22,7 @@ function Login() {
     if (success) {
       navigate('/posts');
     } else {
-      setError('Usuário ou senha inválidos. Tente "admin".');
+      setError('Usuário ou senha inválidos. Tente novamente.');
     }
   };
 
