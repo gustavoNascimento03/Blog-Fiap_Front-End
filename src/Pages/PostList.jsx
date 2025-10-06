@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function PostList() {
   const navigate = useNavigate();
   const { isAuthenticated, posts, setPosts, isLoadingPosts } = useAuth();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -18,17 +19,36 @@ function PostList() {
       fetch(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`, {
         method: 'DELETE',
       })
-      .then(response => {
-        if (response.ok) {
-          setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
-          handleCloseModal();
-          alert('Post apagado com sucesso!');
-        } else {
-          alert('Falha ao apagar o post.');
-        }
-      })
-      .catch(error => console.error("Erro ao apagar post:", error));
+        .then(response => {
+          if (response.ok) {
+            setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
+            handleCloseModal();
+            alert('Post apagado com sucesso!');
+          } else {
+            alert('Falha ao apagar o post.');
+          }
+        })
+        .catch(error => console.error("Erro ao apagar post:", error));
     }
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+
+    if (!searchTerm.trim()) {
+      console.log("Campo de pesquisa vazio.");
+      return;
+    }
+
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/posts/search?q=${searchTerm}`)
+      .then(response => response.json())
+      .then(data => {
+        setPosts(data);
+      })
+      .catch(error => {
+        console.error("Erro ao realizar a busca:", error);
+        alert("Não foi possível realizar a busca.");
+      });
   };
 
   const handleEditPost = (postId) => {
@@ -72,7 +92,18 @@ function PostList() {
   return (
     <div className="post-list-container">
       <h1 className='Titulo-PostList'>Confira todos os Posts!</h1>
-      
+
+      <form onSubmit={handleSearchSubmit} className="search-form">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Pesquisar palavra-chave..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <Button type="submit">Pesquisar</Button>
+      </form>
+
       {renderContent()}
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
