@@ -62,7 +62,7 @@ function PostList() {
           <PostCard
             key={post.id}
             title={post.title}
-            professor={post.professor || 'Autor Desconhecido'} 
+            author={post.author || 'Autor Desconhecido'} 
             summary={post.summary || post.body}
             onClick={() => handleCardClick(post)}
           />
@@ -73,7 +73,7 @@ function PostList() {
         {selectedPost && (
           <div>
             <h2>{selectedPost.title}</h2>
-            <p><em>Por: {selectedPost.professor || 'Autor Desconhecido'}</em></p>
+            <p><em>Por: {selectedPost.author || 'Autor Desconhecido'}</em></p>
             <hr />
             <p>{selectedPost.content || selectedPost.body}</p>
 

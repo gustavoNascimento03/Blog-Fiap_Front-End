@@ -4,7 +4,7 @@ import './CreatePost.css';
 
 function CreatePost() {
   const [title, setTitle] = useState('');
-  const [professor, setProfessor] = useState('');
+  const [author, setauthor] = useState('');
   const [content, setContent] = useState('');
 
   const handleSubmit = (event) => {
@@ -12,7 +12,7 @@ function CreatePost() {
 
     const newPost = {
       title: title,
-      professor: professor,
+      author: author,
       content: content,
     };
 
@@ -34,7 +34,7 @@ function CreatePost() {
         alert('Post criado com sucesso!');
 
         setTitle('');
-        setProfessor('');
+        setauthor('');
         setContent('');
       })
       .catch(error => {
@@ -61,12 +61,12 @@ function CreatePost() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="professor">Nome do Professor</label>
+          <label htmlFor="author">Nome do author</label>
           <input
             type="text"
-            id="professor"
-            value={professor}
-            onChange={(e) => setProfessor(e.target.value)}
+            id="author"
+            value={author}
+            onChange={(e) => setauthor(e.target.value)}
             required
           />
         </div>
