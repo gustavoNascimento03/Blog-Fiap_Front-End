@@ -70,7 +70,7 @@ function CreatePost() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="author">Nome do author</label>
+          <label htmlFor="author">Nome do autor</label>
           <input
             type="text"
             id="author"
